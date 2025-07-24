@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:afterglow/pages/profile_page.dart';
 import 'package:afterglow/widgets/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,37 +45,40 @@ class _NavPageState extends State<NavPage> {
       );
     }
 
-    return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("1")],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: [Text("2")],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children: [Text("3")],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("4")],
-          ),
-        ],
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage("assets/bg1.jpg"),
+        ),
       ),
-      backgroundColor: Colors.red,
-      bottomNavigationBar: AfterGlowNavigationBar(
-        onChangedIndex: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+      child: Scaffold(
+        body: IndexedStack(
+          index: currentIndex,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("1")],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("2")],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Text("3")],
+            ),
+            ProfilePage(),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        bottomNavigationBar: AfterGlowNavigationBar(
+          onChangedIndex: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }

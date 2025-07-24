@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class AfterGlowNavigationBar extends StatefulWidget {
@@ -13,41 +15,47 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 91,
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
+    return Padding(
+      padding: EdgeInsetsGeometry.all(8),
+      child: ClipRRect(
+        borderRadius: BorderRadiusGeometry.circular(12),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            height: 91,
+            decoration: ShapeDecoration(
+              color: Colors.white.withValues(alpha: 0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(24),
+              ),
+            ),
+            padding: EdgeInsets.only(top: 8, bottom: 8, right: 12, left: 12),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:
+                  [
+                    (Icons.dangerous, "123"),
+                    (Icons.dangerous, "123"),
+                    (Icons.dangerous, "123"),
+                    (Icons.person_2, "Profile"),
+                  ].indexed.map<Widget>((data) {
+                    return AfterGlowNavigationIconButton(
+                      showText: currentIndex == data.$1,
+                      text: data.$2.$2,
+                      icon: data.$2.$1,
+                      onTap: () {
+                        setState(() {
+                          currentIndex = data.$1;
+                          widget.onChangedIndex?.call(data.$1);
+                        });
+                      },
+                    );
+                  }).toList(),
+            ),
           ),
         ),
-      ),
-      padding: EdgeInsets.only(top: 8, bottom: 8, right: 12, left: 12),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children:
-            [
-              (Icons.dangerous, "123"),
-              (Icons.dangerous, "123"),
-              (Icons.dangerous, "123"),
-              (Icons.dangerous, "123"),
-            ].indexed.map<Widget>((data) {
-              return AfterGlowNavigationIconButton(
-                showText: currentIndex == data.$1,
-                text: data.$2.$2,
-                icon: data.$2.$1,
-                onTap: () {
-                  setState(() {
-                    currentIndex = data.$1;
-                    widget.onChangedIndex?.call(data.$1);
-                  });
-                },
-              );
-            }).toList(),
       ),
     );
   }
@@ -88,13 +96,24 @@ class _AfterGlowNavigationIconButtonState
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(widget.icon, color: Colors.red.withValues(alpha: 0.5)),
+            Icon(widget.icon, color: Colors.white.withValues(alpha: 0.78)),
             AnimatedSize(
               duration: Durations.short4,
               curve: Curves.ease,
               child: Visibility(
                 visible: widget.showText,
-                child: Row(children: [SizedBox(width: 4), Text(widget.text)]),
+                child: Row(
+                  children: [
+                    SizedBox(width: 4),
+                    Text(
+                      widget.text,
+                      style: TextStyle(
+                        color: Colors.white.withValues(alpha: 0.78),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
