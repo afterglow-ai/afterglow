@@ -74,17 +74,17 @@ class _AfterGlowNavigationIconButtonState
     extends State<AfterGlowNavigationIconButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 12, right: 16, bottom: 12, left: 16),
-      margin: EdgeInsets.only(right: 8, left: 8),
-      decoration: ShapeDecoration(
-        color: Colors.pink.withValues(alpha: 0.2),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(12),
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Container(
+        padding: EdgeInsets.only(top: 12, right: 16, bottom: 12, left: 16),
+        margin: EdgeInsets.only(right: 8, left: 8),
+        decoration: ShapeDecoration(
+          color: Colors.pink.withValues(alpha: 0.2),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(12),
+          ),
         ),
-      ),
-      child: GestureDetector(
-        onTap: widget.onTap,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
