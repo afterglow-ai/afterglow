@@ -1,14 +1,22 @@
 import 'dart:io';
 
 import 'package:afterglow/pages/chat_page.dart';
+import 'package:afterglow/pages/memory_page.dart';
 import 'package:afterglow/pages/profile_page.dart';
 import 'package:afterglow/widgets/navbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'https://rnawadrbuzmcdwacourg.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJuYXdhZHJidXptY2R3YWNvdXJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMzg4NjYsImV4cCI6MjA2ODkxNDg2Nn0.BlbtSbYmfVw0yjC7bsBb6sar-0twO8y34lsY1xkzGmc',
+  );
 
   runApp(const MyApp());
 }
@@ -74,10 +82,7 @@ class _NavPageState extends State<NavPage> {
         body: IndexedStack(
           index: currentIndex,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("1")],
-            ),
+            MemoryPage(),
             ChatPage(),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
