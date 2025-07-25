@@ -21,7 +21,7 @@ class MemoryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: deviceSize.height * 0.05),
-              Text("回忆", style: TextStyle(fontSize: 24)),
+              Text("回忆", style: TextStyle(fontSize: 24, color: Colors.black)),
               SizedBox(height: 16),
               SizedBox(
                 height: 40,

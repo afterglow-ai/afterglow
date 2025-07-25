@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:afterglow/fields.dart';
 import 'package:afterglow/pages/chat_page.dart';
 import 'package:afterglow/pages/memory_page.dart';
 import 'package:afterglow/pages/profile_page.dart';
@@ -18,9 +19,12 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJuYXdhZHJidXptY2R3YWNvdXJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMzg4NjYsImV4cCI6MjA2ODkxNDg2Nn0.BlbtSbYmfVw0yjC7bsBb6sar-0twO8y34lsY1xkzGmc',
   );
   final auth = Supabase.instance.client.auth;
+  auth.headers["X-Supabase-Client-Platform-Version"] = "client";
+
   if (auth.currentUser == null) {
     await auth.signInAnonymously();
   }
+  agents.addAll(await Supabase.instance.client.from("agents").select());
 
   runApp(const MyApp());
 }
@@ -34,17 +38,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "Xiaolai",
-        colorScheme: ColorScheme(
+        colorScheme: ColorScheme.fromSeed(
           brightness: Brightness.light,
-          primary: Color.fromRGBO(255, 165, 165, 1),
-          onPrimary: Colors.white,
-          secondary: Color.fromRGBO(255, 198, 198, 1),
-          onSecondary: Color.fromRGBO(120, 84, 84, 1),
-          error: Color.fromRGBO(109, 49, 49, 1),
-          onError: Color.fromRGBO(116, 41, 41, 1),
-          surface: Color.fromRGBO(255, 98, 98, 1),
-          onSurface: Color.fromRGBO(255, 162, 162, 1),
-        ),
+          seedColor: Color.fromRGBO(255, 165, 165, 1),
+        ).copyWith(primary: Color.fromRGBO(255, 165, 165, 1)),
       ),
       home: const NavPage(),
     );
