@@ -12,50 +12,44 @@ class AfterGlowNavigationBar extends StatefulWidget {
 }
 
 class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
-  int currentIndex = 0;
+  int currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsGeometry.all(8),
-      child: ClipRRect(
-        borderRadius: BorderRadiusGeometry.circular(12),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            height: 91,
-            decoration: ShapeDecoration(
-              color: Colors.white.withValues(alpha: 0.5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(24),
-              ),
-            ),
-            padding: EdgeInsets.only(top: 8, bottom: 8, right: 12, left: 12),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:
-                  [
-                    ("assets/icons/memory.svg", "Memory"),
-                    ("assets/icons/write.svg", "Write"),
-                    ("assets/icons/call.svg", "Call"),
-                    ("assets/icons/profile.svg", "Profile"),
-                  ].indexed.map<Widget>((data) {
-                    return AfterGlowNavigationIconButton(
-                      showText: currentIndex == data.$1,
-                      text: data.$2.$2,
-                      iconAsset: data.$2.$1,
-                      onTap: () {
-                        setState(() {
-                          currentIndex = data.$1;
-                          widget.onChangedIndex?.call(data.$1);
-                        });
-                      },
-                    );
-                  }).toList(),
-            ),
+      child: Container(
+        height: 91,
+        decoration: ShapeDecoration(
+          color: Colors.white.withValues(alpha: 0.7),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(24),
           ),
+        ),
+        padding: EdgeInsets.only(top: 8, bottom: 8, right: 12, left: 12),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children:
+              [
+                ("assets/icons/memory.svg", "Memory"),
+                ("assets/icons/write.svg", "Write"),
+                ("assets/icons/call.svg", "Call"),
+                //  ("assets/icons/profile.svg", "Profile"),
+              ].indexed.map<Widget>((data) {
+                return AfterGlowNavigationIconButton(
+                  showText: currentIndex == data.$1,
+                  text: data.$2.$2,
+                  iconAsset: data.$2.$1,
+                  onTap: () {
+                    setState(() {
+                      currentIndex = data.$1;
+                      widget.onChangedIndex?.call(data.$1);
+                    });
+                  },
+                );
+              }).toList(),
         ),
       ),
     );
@@ -90,7 +84,9 @@ class _AfterGlowNavigationIconButtonState
         padding: EdgeInsets.only(top: 12, right: 16, bottom: 12, left: 16),
         margin: EdgeInsets.only(right: 8, left: 8),
         decoration: ShapeDecoration(
-          color: theme.colorScheme.primary,
+          color: widget.showText
+              ? theme.colorScheme.primary
+              : Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(12),
           ),

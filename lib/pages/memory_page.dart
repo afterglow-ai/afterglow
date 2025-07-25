@@ -7,7 +7,7 @@ class MemoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(top: 16),
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -20,9 +20,9 @@ class MemoryPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: deviceSize.height * 0.1),
+              SizedBox(height: deviceSize.height * 0.05),
               Text("回忆", style: TextStyle(fontSize: 24)),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               SizedBox(
                 height: 40,
                 child: ListView(
