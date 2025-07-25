@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:afterglow/pages/chat_page.dart';
 import 'package:afterglow/pages/profile_page.dart';
 import 'package:afterglow/widgets/navbar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,7 +18,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const NavPage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light().copyWith(
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: Color.fromRGBO(255, 165, 165, 1),
+          onPrimary: Color.fromRGBO(255, 165, 165, 1),
+          secondary: Color.fromRGBO(255, 165, 165, 1),
+          onSecondary: Color.fromRGBO(255, 165, 165, 1),
+          error: Color.fromRGBO(255, 165, 165, 1),
+          onError: Color.fromRGBO(255, 165, 165, 1),
+          surface: Color.fromRGBO(255, 165, 165, 1),
+          onSurface: Color.fromRGBO(255, 165, 165, 1),
+        ),
+      ),
+      home: const NavPage(),
+    );
   }
 }
 
@@ -34,7 +52,7 @@ class _NavPageState extends State<NavPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
@@ -60,10 +78,7 @@ class _NavPageState extends State<NavPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [Text("1")],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("2")],
-            ),
+            ChatPage(),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [Text("3")],

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AfterGlowNavigationBar extends StatefulWidget {
   final Function(int index)? onChangedIndex;
@@ -24,7 +25,7 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
           child: Container(
             height: 91,
             decoration: ShapeDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: Colors.white.withValues(alpha: 0.5),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadiusGeometry.circular(24),
               ),
@@ -36,15 +37,15 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children:
                   [
-                    (Icons.dangerous, "123"),
-                    (Icons.dangerous, "123"),
-                    (Icons.dangerous, "123"),
-                    (Icons.person_2, "Profile"),
+                    ("assets/icons/memory.svg", "Memory"),
+                    ("assets/icons/write.svg", "Write"),
+                    ("assets/icons/call.svg", "Call"),
+                    ("assets/icons/profile.svg", "Profile"),
                   ].indexed.map<Widget>((data) {
                     return AfterGlowNavigationIconButton(
                       showText: currentIndex == data.$1,
                       text: data.$2.$2,
-                      icon: data.$2.$1,
+                      iconAsset: data.$2.$1,
                       onTap: () {
                         setState(() {
                           currentIndex = data.$1;
@@ -64,13 +65,13 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
 class AfterGlowNavigationIconButton extends StatefulWidget {
   final bool showText;
   final String text;
-  final IconData icon;
+  final String iconAsset;
   final Function() onTap;
   const AfterGlowNavigationIconButton({
     super.key,
     required this.showText,
     required this.text,
-    required this.icon,
+    required this.iconAsset,
     required this.onTap,
   });
 
@@ -82,13 +83,14 @@ class _AfterGlowNavigationIconButtonState
     extends State<AfterGlowNavigationIconButton> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
         padding: EdgeInsets.only(top: 12, right: 16, bottom: 12, left: 16),
         margin: EdgeInsets.only(right: 8, left: 8),
         decoration: ShapeDecoration(
-          color: Colors.pink.withValues(alpha: 0.2),
+          color: theme.colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(12),
           ),
@@ -96,7 +98,13 @@ class _AfterGlowNavigationIconButtonState
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(widget.icon, color: Colors.white.withValues(alpha: 0.78)),
+            SvgPicture.asset(
+              widget.iconAsset,
+              colorFilter: ColorFilter.mode(
+                Colors.white.withValues(alpha: 0.78),
+                BlendMode.srcIn,
+              ),
+            ),
             AnimatedSize(
               duration: Durations.short4,
               curve: Curves.ease,
