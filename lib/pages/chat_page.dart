@@ -90,7 +90,35 @@ class ChatPageState extends State<ChatPage> {
                             Spacer(),
                             SizedBox(width: 8),
                             FilledButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final res = await globalDifyResponse;
+
+                                if (res != null) {
+                                  // 将信件放入回忆
+                                  Supabase.instance.client
+                                      .from("messages")
+                                      .insert({
+                                        "user_id": Supabase
+                                            .instance
+                                            .client
+                                            .auth
+                                            .currentUser
+                                            ?.id,
+                                        "role": "agent",
+                                        "content": res.message,
+                                        "audio_url": res.audioUrl,
+                                        "agent": selectedAgentId,
+                                        "saved": true,
+                                      })
+                                      .then((value) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(content: Text("信件已放入回忆")),
+                                        );
+                                      });
+                                }
+                              },
                               child: Center(child: Text("放入回忆")),
                             ),
                           ],

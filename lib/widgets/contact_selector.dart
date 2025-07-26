@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sendream/widgets/letter_container.dart';
 
+int selectedAgentId = 0;
+
 class ContactSelector extends StatelessWidget {
   final VoidCallback onBack;
   final Function(dynamic) onNavBack;
@@ -51,6 +53,7 @@ class ContactSelector extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(24),
                           onTap: () {
+                            selectedAgentId = e["id"];
                             Navigator.of(context)
                                 .push(
                                   PageRouteBuilder(
