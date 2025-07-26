@@ -19,11 +19,11 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJuYXdhZHJidXptY2R3YWNvdXJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzMzg4NjYsImV4cCI6MjA2ODkxNDg2Nn0.BlbtSbYmfVw0yjC7bsBb6sar-0twO8y34lsY1xkzGmc',
   );
   final auth = Supabase.instance.client.auth;
-  auth.headers["X-Supabase-Client-Platform-Version"] = "client";
 
   if (auth.currentUser == null) {
     await auth.signInAnonymously();
   }
+
   agents.addAll(await Supabase.instance.client.from("agents").select());
 
   runApp(const MyApp());
@@ -59,6 +59,7 @@ class NavPage extends StatefulWidget {
 
 class _NavPageState extends State<NavPage> {
   int currentIndex = 1;
+  int bg = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class _NavPageState extends State<NavPage> {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage("assets/bg1.jpg"),
+          image: AssetImage("assets/bg$bg.png"),
         ),
       ),
       child: Scaffold(

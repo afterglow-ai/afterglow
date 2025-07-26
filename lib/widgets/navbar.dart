@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,14 +18,13 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
     return Padding(
       padding: EdgeInsetsGeometry.all(8),
       child: Container(
-        height: 91,
+        height: 64,
         decoration: ShapeDecoration(
           color: Colors.white.withValues(alpha: 0.7),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(24),
           ),
         ),
-        padding: EdgeInsets.only(top: 8, bottom: 8, right: 12, left: 12),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
