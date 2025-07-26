@@ -16,6 +16,7 @@ class LetterContainer extends StatefulWidget {
 
 class _LetterContainerState extends State<LetterContainer> {
   final ImagePicker _picker = ImagePicker();
+  final TextEditingController controller = TextEditingController();
   XFile? _selectedImage;
 
   Future<void> _pickImage() async {
@@ -91,18 +92,16 @@ class _LetterContainerState extends State<LetterContainer> {
                           .select()
                           .eq("id", widget.agentId!)
                           .single();
-                      print(result);
                       String? imageUrl;
                       if (_selectedImage != null) {
-                        imageUrl = await Supabase.instance.client.storage
-                            .from("pic")
-                            .upload(Uuid().v4(), File(_selectedImage!.path));
+                        imageUrl =
+                            "https://rnawadrbuzmcdwacourg.supabase.co/storage/v1/object/public/${await Supabase.instance.client.storage.from("pic").upload(Uuid().v4(), File(_selectedImage!.path))}";
                       }
 
                       await chatWithDify(
                         result["prompt"],
                         result["name"],
-                        "", //TODO message here
+                        controller.text,
                         imageUrl,
                       );
                     },
@@ -151,6 +150,7 @@ class _LetterContainerState extends State<LetterContainer> {
                   child: TextField(
                     maxLines: null,
                     expands: true,
+                    controller: controller,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "在这里写下你的信件内容...",

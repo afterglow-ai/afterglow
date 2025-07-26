@@ -29,7 +29,7 @@ Future<String?> getPersonShort(String name) async {
   return null;
 }
 
-Future<String?> chatWithDify(
+Future<DifyChatResponse?> chatWithDify(
   String prompt,
   String name,
   String message,
@@ -63,8 +63,10 @@ Future<String?> chatWithDify(
       ),
     );
     if (data.statusCode == 200) {
-      print(data);
-      return data.data["data"]["outputs"]["message"];
+      return DifyChatResponse(
+        message: data.data["data"]["outputs"]["message"].toString(),
+        audioUrl: data.data["data"]["outputs"]["audio_file"]?[0]?["url"],
+      );
     } else {
       debugPrint('Request failed with status: ${data.statusCode}');
     }
@@ -72,4 +74,11 @@ Future<String?> chatWithDify(
     debugPrint('Request failed: $e');
   }
   return null;
+}
+
+class DifyChatResponse {
+  final String? message;
+  final String? audioUrl;
+
+  DifyChatResponse({required this.message, this.audioUrl});
 }
