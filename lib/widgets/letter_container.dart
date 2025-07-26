@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sendream/dify.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class LetterContainer extends StatefulWidget {
   final String? name;
@@ -25,9 +28,11 @@ class _LetterContainerState extends State<LetterContainer> {
       }
     } catch (e) {
       // Handle error
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('选择图片失败: $e')));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('选择图片失败: $e')));
+      }
     }
   }
 
@@ -79,7 +84,28 @@ class _LetterContainerState extends State<LetterContainer> {
                   ),
                   SizedBox(width: 8),
                   FilledButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final client = Supabase.instance.client;
+                      final result = await client
+                          .from("agents")
+                          .select()
+                          .eq("id", widget.agentId!)
+                          .single();
+                      print(result);
+                      String? imageUrl;
+                      if (_selectedImage != null) {
+                        imageUrl = await Supabase.instance.client.storage
+                            .from("pic")
+                            .upload(Uuid().v4(), File(_selectedImage!.path));
+                      }
+
+                      await chatWithDify(
+                        result["prompt"],
+                        result["name"],
+                        "", //TODO message here
+                        imageUrl,
+                      );
+                    },
                     child: Center(child: Text("发送")),
                   ),
                 ],
