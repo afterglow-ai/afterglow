@@ -1,4 +1,4 @@
-import 'package:afterglow/widgets/book_container.dart';
+import 'package:sendream/widgets/book_container.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

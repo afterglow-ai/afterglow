@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:afterglow/pages/chat_page.dart';
-import 'package:afterglow/pages/memory_page.dart';
-import 'package:afterglow/pages/profile_page.dart';
-import 'package:afterglow/widgets/navbar.dart';
+import 'package:sendream/pages/chat_page.dart';
+import 'package:sendream/pages/memory_page.dart';
+import 'package:sendream/pages/profile_page.dart';
+import 'package:sendream/widgets/navbar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

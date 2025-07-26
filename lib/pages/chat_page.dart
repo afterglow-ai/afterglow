@@ -1,5 +1,5 @@
-import 'package:afterglow/dify.dart';
-import 'package:afterglow/widgets/chatbubble.dart';
+import 'package:sendream/dify.dart';
+import 'package:sendream/widgets/chatbubble.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
