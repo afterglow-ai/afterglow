@@ -13,10 +13,10 @@ class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _ChatPageState();
+  State<StatefulWidget> createState() => ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class ChatPageState extends State<ChatPage> {
   bool init = false;
   bool newContact = false;
   String? newContactName;
@@ -53,28 +53,101 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final theme = Theme.of(context);
     return AnimatedSwitcher(
       duration: Durations.short4,
       child: !init
-          ? navPageKey.currentState?.bg == 0
-                ? GestureDetector(
-                    child: Container(color: Colors.transparent),
-                    onTap: () {
-                      //TODO Show Dify Response
-                      // Navigator.push(context, route)
-
-                      navPageKey.currentState?.changeBg(1);
-                    },
+          ? navPageKey.currentState?.bg == 1
+                ? Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ).copyWith(top: 24),
+                    constraints: BoxConstraints.expand(),
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(
+                          color: theme.colorScheme.primary,
+                          width: 8,
+                        ),
+                      ),
+                      color: Color(0xFFFFF0F0),
+                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      navPageKey.currentState?.changeBg(1);
+                                    },
+                                    icon: Icon(
+                                      Icons.close,
+                                      color: Color(0xFFFF8B8B),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  SizedBox(width: 8),
+                                  FilledButton(
+                                    onPressed: () {},
+                                    child: Center(child: Text("放入回忆")),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 8,
+                                ),
+                                child: Text(
+                                  globalDifyResponse!.message.toString(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : navPageKey.currentState?.bg == 0
+                ? Container(
+                    color: Colors.transparent,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Chatbubble(text: "信件正在派送！投喂薯条加速获取信件哦！"),
+                        SizedBox(height: 16),
+                        Padding(
+                          padding: EdgeInsets.only(left: 24),
+                          child: SizedBox(
+                            width: 302,
+                            child: FilledButton(
+                              onPressed: () {
+                                navPageKey.currentState?.changeBg(1);
+                              },
+                              child: Center(child: Text("投喂薯条")),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 : navPageKey.currentState?.bg == 2
                 ? GestureDetector(
                     child: Container(
                       color: Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "我去放漂流瓶啦！漂流瓶送出后预计会在一到两天内收到回信！投喂薯条可以加速获取信件哦！",
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Chatbubble(
+                            text: "我去放漂流瓶啦！漂流瓶送出后预计会在一到两天内收到回信！投喂薯条可以加速获取信件哦！",
+                          ),
+                        ],
                       ),
                     ),
                     onTap: () {

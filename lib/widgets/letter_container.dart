@@ -120,8 +120,6 @@ class _LetterContainerState extends State<LetterContainer> {
                                         "https://rnawadrbuzmcdwacourg.supabase.co/storage/v1/object/public/${await Supabase.instance.client.storage.from("pic").upload(Uuid().v4(), File(_selectedImage!.path))}";
                                   }
 
-                                  print("Image URL: $imageUrl");
-
                                   // 保存到 supabase
                                   await client.from("messages").insert({
                                     "agent": widget.agentId,

@@ -102,7 +102,11 @@ class NavPageState extends State<NavPage> {
       child: Scaffold(
         body: IndexedStack(
           index: currentIndex,
-          children: [MemoryPage(), ChatPage(), ProfilePage()],
+          children: [
+            MemoryPage(),
+            ChatPage(key: chatPageKey),
+            ProfilePage(),
+          ],
         ),
         backgroundColor: Colors.transparent,
         bottomNavigationBar: AfterGlowNavigationBar(
