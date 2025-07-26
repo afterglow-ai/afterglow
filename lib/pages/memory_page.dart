@@ -12,18 +12,23 @@ class MemoryPage extends StatefulWidget {
 }
 
 class _MemoryPageState extends State<MemoryPage> {
-  var agents = [];
-  String? currentAgent;
+  var agentAndMessages = [];
+  int currentAgentIndex = 0;
 
   @override
   void initState() {
     super.initState();
 
-    Supabase.instance.client.from('agents').select().then((data) {
-      setState(() {
-        agents = data;
-      });
-    });
+    Supabase.instance.client
+        .from('agents')
+        .select("*, messages(*)")
+        .eq("messages.saved", true)
+        .then((data) {
+          print("Fetched agents and messages: $data");
+          setState(() {
+            agentAndMessages = data;
+          });
+        });
   }
 
   @override
@@ -38,11 +43,15 @@ class _MemoryPageState extends State<MemoryPage> {
             height: 40,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: agents.map((e) {
+              children: agentAndMessages.map((e) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        currentAgentIndex = agentAndMessages.indexOf(e);
+                      });
+                    },
                     child: Text(
                       e['name'],
                       style: TextStyle(color: Colors.white),
@@ -60,11 +69,18 @@ class _MemoryPageState extends State<MemoryPage> {
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
               ),
+              itemCount: currentAgentIndex < agentAndMessages.length
+                  ? agentAndMessages[currentAgentIndex]['messages'].length
+                  : 0,
               itemBuilder: (BuildContext context, int index) {
+                final message =
+                    agentAndMessages[currentAgentIndex]['messages'][index];
+
+                final title = "这是第 ${index + 1} 封信";
                 return MemoryCard(
-                  title: "回忆标题 $index",
-                  body: "这是回忆的内容，可能会很长也可能很短。",
-                  createdAt: "2023-10-01",
+                  title: (message["role"] == "user" ? "【送信】" : "【回信】") + title,
+                  body: message['content'],
+                  createdAt: message['created_at'],
                 );
               },
             ),
