@@ -17,7 +17,7 @@ class Chatbubble extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.only(left: 8, top: 16, right: 16),
+        padding: EdgeInsets.only(left: 24, top: 16, right: 24),
         child: Column(
           crossAxisAlignment: isRtl
               ? CrossAxisAlignment.end

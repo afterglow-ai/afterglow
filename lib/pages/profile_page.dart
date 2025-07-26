@@ -1,35 +1,41 @@
+import 'package:afterglow/widgets/book_container.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 8).copyWith(top: 8),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      ),
-      child: ListView(
+    return BookContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: ShapeDecoration(
-                    shape: CircleBorder(),
-
-                    color: Colors.blue,
-                  ),
-                  child: Icon(Icons.people, color: Colors.white),
-                ),
-              ],
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              "用户",
+              style: TextStyle(fontSize: 24, color: Colors.black),
             ),
+            subtitle: Text(
+              "ID: ${Supabase.instance.client.auth.currentUser?.id}",
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text("会员"),
+            trailing: Icon(Icons.chevron_right),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text("反馈"),
+            trailing: Icon(Icons.chevron_right),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text("设置"),
+            trailing: Icon(Icons.chevron_right),
           ),
         ],
       ),

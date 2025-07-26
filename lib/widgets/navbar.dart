@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -16,7 +15,7 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.all(8),
+      padding: EdgeInsetsGeometry.all(24),
       child: Container(
         height: 64,
         decoration: ShapeDecoration(
@@ -33,8 +32,7 @@ class _AfterGlowNavigationBarState extends State<AfterGlowNavigationBar> {
               [
                 ("assets/icons/memory.svg", "Memory"),
                 ("assets/icons/write.svg", "Write"),
-                ("assets/icons/call.svg", "Call"),
-                //  ("assets/icons/profile.svg", "Profile"),
+                ("assets/icons/profile.svg", "Profile"),
               ].indexed.map<Widget>((data) {
                 return AfterGlowNavigationIconButton(
                   showText: currentIndex == data.$1,

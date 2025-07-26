@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:afterglow/fields.dart';
 import 'package:afterglow/pages/chat_page.dart';
 import 'package:afterglow/pages/memory_page.dart';
 import 'package:afterglow/pages/profile_page.dart';
 import 'package:afterglow/widgets/navbar.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,8 +23,6 @@ void main() async {
   if (auth.currentUser == null) {
     await auth.signInAnonymously();
   }
-
-  agents.addAll(await Supabase.instance.client.from("agents").select());
 
   runApp(const MyApp());
 }
@@ -60,6 +58,21 @@ class NavPage extends StatefulWidget {
 class _NavPageState extends State<NavPage> {
   int currentIndex = 1;
   int bg = 1;
+  AudioPlayer player = AudioPlayer();
+  @override
+  void initState() {
+    super.initState();
+    player.play(AssetSource("bg.mp3"));
+    player.onPlayerComplete.listen((e) {
+      player.play(AssetSource("bg.mp3"));
+    });
+  }
+
+  void changeBg(int bg) {
+    setState(() {
+      this.bg = bg;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,15 +97,7 @@ class _NavPageState extends State<NavPage> {
       child: Scaffold(
         body: IndexedStack(
           index: currentIndex,
-          children: [
-            MemoryPage(),
-            ChatPage(),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("3")],
-            ),
-            ProfilePage(),
-          ],
+          children: [MemoryPage(), ChatPage(), ProfilePage()],
         ),
         backgroundColor: Colors.transparent,
         bottomNavigationBar: AfterGlowNavigationBar(
