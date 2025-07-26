@@ -80,7 +80,17 @@ class _LetterContainerState extends State<LetterContainer> {
                   ),
                   Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (controller.text.isEmpty) {
+                        return;
+                      }
+                      setState(() {
+                        controller.text = controller.text.substring(
+                          0,
+                          controller.text.length - 1,
+                        );
+                      });
+                    },
                     icon: Icon(Icons.backspace, color: Color(0xFFFF8B8B)),
                   ),
                   SizedBox(width: 8),
