@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sendream/consts.dart';
 import 'package:sendream/dify.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -121,12 +122,16 @@ class _LetterContainerState extends State<LetterContainer> {
                         "saved": true,
                       });
 
-                      await chatWithDify(
+                      chatWithDify(
                         result["prompt"],
                         result["name"],
                         controller.text,
                         imageUrl,
                       );
+                      navPageKey.currentState?.changeBg(2);
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
                     },
                     child: Center(child: Text("发送")),
                   ),

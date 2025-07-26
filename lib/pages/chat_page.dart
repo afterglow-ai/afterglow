@@ -1,3 +1,4 @@
+import 'package:sendream/consts.dart';
 import 'package:sendream/dify.dart';
 import 'package:sendream/widgets/chatbubble.dart';
 import 'package:flutter/material.dart';
@@ -56,14 +57,38 @@ class _ChatPageState extends State<ChatPage> {
     return AnimatedSwitcher(
       duration: Durations.short4,
       child: !init
-          ? GestureDetector(
-              child: Container(color: Colors.transparent),
-              onTap: () {
-                setState(() {
-                  init = true;
-                });
-              },
-            )
+          ? navPageKey.currentState?.bg == 0
+                ? GestureDetector(
+                    child: Container(color: Colors.transparent),
+                    onTap: () {
+                      //TODO Show Dify Response
+                      // Navigator.push(context, route)
+
+                      navPageKey.currentState?.changeBg(1);
+                    },
+                  )
+                : navPageKey.currentState?.bg == 2
+                ? GestureDetector(
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Text(
+                          "我去放漂流瓶啦！漂流瓶送出后预计会在一到两天内收到回信！投喂薯条可以加速获取信件哦！",
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      navPageKey.currentState?.changeBg(0);
+                    },
+                  )
+                : GestureDetector(
+                    child: Container(color: Colors.transparent),
+                    onTap: () {
+                      setState(() {
+                        init = true;
+                      });
+                    },
+                  )
           : Stack(
               fit: StackFit.expand,
               children: [
