@@ -4,8 +4,13 @@ import 'package:sendream/widgets/letter_container.dart';
 
 class ContactSelector extends StatelessWidget {
   final VoidCallback onBack;
+  final Function(dynamic) onNavBack;
 
-  const ContactSelector({super.key, required this.onBack});
+  const ContactSelector({
+    super.key,
+    required this.onBack,
+    required this.onNavBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,29 +51,36 @@ class ContactSelector extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(24),
                           onTap: () {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
-                                        LetterContainer(
+                            Navigator.of(context)
+                                .push(
+                                  PageRouteBuilder(
+                                    pageBuilder:
+                                        (
+                                          context,
+                                          animation,
+                                          secondaryAnimation,
+                                        ) => LetterContainer(
                                           name: e["name"],
                                           agentId: e["id"],
                                         ),
-                                transitionsBuilder:
-                                    (
-                                      context,
-                                      animation,
-                                      secondaryAnimation,
-                                      child,
-                                    ) {
-                                      return FadeTransition(
-                                        opacity: animation,
-                                        child: child,
-                                      );
-                                    },
-                                transitionDuration: Duration(milliseconds: 500),
-                              ),
-                            );
+                                    transitionsBuilder:
+                                        (
+                                          context,
+                                          animation,
+                                          secondaryAnimation,
+                                          child,
+                                        ) {
+                                          return FadeTransition(
+                                            opacity: animation,
+                                            child: child,
+                                          );
+                                        },
+                                    transitionDuration: Duration(
+                                      milliseconds: 500,
+                                    ),
+                                  ),
+                                )
+                                .then(onNavBack);
                           },
                           child: Container(
                             width: double.infinity,

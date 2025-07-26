@@ -135,7 +135,7 @@ class _LetterContainerState extends State<LetterContainer> {
                                     "saved": true,
                                   });
 
-                                  chatWithDify(
+                                  globalDifyResponse = chatWithDify(
                                     result["prompt"],
                                     result["name"],
                                     controller.text,

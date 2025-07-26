@@ -56,112 +56,118 @@ class ChatPageState extends State<ChatPage> {
     final theme = Theme.of(context);
     return AnimatedSwitcher(
       duration: Durations.short4,
-      child: !init
-          ? navPageKey.currentState?.bg == 1
-                ? Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                    ).copyWith(top: 24),
-                    constraints: BoxConstraints.expand(),
-                    decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: BorderSide(
-                          color: theme.colorScheme.primary,
-                          width: 8,
-                        ),
-                      ),
-                      color: Color(0xFFFFF0F0),
-                    ),
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
+      child: navPageKey.currentState?.bg == 1 && globalDifyResponse != null
+          ? Container(
+              key: ValueKey(globalDifyResponse),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ).copyWith(top: 24),
+              constraints: BoxConstraints.expand(),
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(color: theme.colorScheme.primary, width: 8),
+                ),
+                color: Color(0xFFFFF0F0),
+              ),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
                       children: [
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      navPageKey.currentState?.changeBg(1);
-                                    },
-                                    icon: Icon(
-                                      Icons.close,
-                                      color: Color(0xFFFF8B8B),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  SizedBox(width: 8),
-                                  FilledButton(
-                                    onPressed: () {},
-                                    child: Center(child: Text("放入回忆")),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 8,
-                                ),
-                                child: Text(
-                                  globalDifyResponse!.message.toString(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : navPageKey.currentState?.bg == 0
-                ? Container(
-                    color: Colors.transparent,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Chatbubble(text: "信件正在派送！投喂薯条加速获取信件哦！"),
-                        SizedBox(height: 16),
-                        Padding(
-                          padding: EdgeInsets.only(left: 24),
-                          child: SizedBox(
-                            width: 302,
-                            child: FilledButton(
+                        Row(
+                          children: [
+                            IconButton(
                               onPressed: () {
-                                navPageKey.currentState?.changeBg(1);
+                                setState(() {
+                                  globalDifyResponse = null;
+                                });
                               },
-                              child: Center(child: Text("投喂薯条")),
+                              icon: Icon(Icons.close, color: Color(0xFFFF8B8B)),
                             ),
-                          ),
+                            Spacer(),
+                            SizedBox(width: 8),
+                            FilledButton(
+                              onPressed: () {},
+                              child: Center(child: Text("放入回忆")),
+                            ),
+                          ],
+                        ),
+                        FutureBuilder(
+                          future: globalDifyResponse,
+                          builder: (context, snapshot) {
+                            final data = snapshot.data;
+                            if (data == null) {
+                              return CircularProgressIndicator();
+                            }
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 8,
+                              ),
+                              child: Text(data.message.toString()),
+                            );
+                          },
                         ),
                       ],
                     ),
-                  )
-                : navPageKey.currentState?.bg == 2
-                ? GestureDetector(
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Chatbubble(
-                            text: "我去放漂流瓶啦！漂流瓶送出后预计会在一到两天内收到回信！投喂薯条可以加速获取信件哦！",
-                          ),
-                        ],
+                  ),
+                ],
+              ),
+            )
+          : navPageKey.currentState?.bg == 0
+          ? Container(
+              key: ValueKey(1),
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Chatbubble(text: "信件正在派送！投喂薯条加速获取信件哦！"),
+                  SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.only(left: 24),
+                    child: SizedBox(
+                      width: 302,
+                      child: FilledButton(
+                        onPressed: () {
+                          navPageKey.currentState?.changeBg(1);
+                        },
+                        child: Center(child: Text("投喂薯条")),
                       ),
                     ),
-                    onTap: () {
-                      navPageKey.currentState?.changeBg(0);
-                    },
-                  )
-                : GestureDetector(
-                    child: Container(color: Colors.transparent),
-                    onTap: () {
-                      setState(() {
-                        init = true;
-                      });
-                    },
-                  )
+                  ),
+                ],
+              ),
+            )
+          : navPageKey.currentState?.bg == 2
+          ? GestureDetector(
+              key: ValueKey(2),
+              child: Container(
+                color: Colors.transparent,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Chatbubble(
+                      text: "我去放漂流瓶啦！漂流瓶送出后预计会在一到两天内收到回信！投喂薯条可以加速获取信件哦！",
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () {
+                navPageKey.currentState?.changeBg(0);
+              },
+            )
+          : !init
+          ? GestureDetector(
+              child: Container(color: Colors.transparent),
+              onTap: () {
+                setState(() {
+                  init = true;
+                });
+              },
+            )
           : Stack(
               fit: StackFit.expand,
               children: [
@@ -202,6 +208,8 @@ class ChatPageState extends State<ChatPage> {
                             key: ValueKey(selectContact),
                             visible: selectContact,
                             child: ContactSelector(
+                              onNavBack: (_) =>
+                                  navPageKey.currentState?.changeBg(2),
                               onBack: () {
                                 setState(() {
                                   selectContact = false;

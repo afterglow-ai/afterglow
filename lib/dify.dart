@@ -35,7 +35,6 @@ Future<DifyChatResponse?> chatWithDify(
   String message,
   String? imageUrl,
 ) async {
-  globalDifyResponse = null;
   try {
     final data = await Dio().post(
       'https://api.dify.ai/v1/workflows/run',
@@ -68,7 +67,6 @@ Future<DifyChatResponse?> chatWithDify(
         message: data.data["data"]["outputs"]["message"].toString(),
         audioUrl: data.data["data"]["outputs"]["audio_file"]?[0]?["url"],
       );
-      globalDifyResponse = resp;
       return resp;
     } else {
       debugPrint('Request failed with status: ${data.statusCode}');
@@ -86,4 +84,4 @@ class DifyChatResponse {
   DifyChatResponse({required this.message, this.audioUrl});
 }
 
-DifyChatResponse? globalDifyResponse;
+Future<DifyChatResponse?>? globalDifyResponse;
