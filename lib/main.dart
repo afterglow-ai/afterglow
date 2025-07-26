@@ -102,7 +102,7 @@ class NavPageState extends State<NavPage> {
         body: IndexedStack(
           index: currentIndex,
           children: [
-            MemoryPage(),
+            MemoryPage(key: memKey),
             ChatPage(key: chatPageKey),
             ProfilePage(),
           ],

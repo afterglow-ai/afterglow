@@ -8,10 +8,10 @@ class MemoryPage extends StatefulWidget {
   const MemoryPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _MemoryPageState();
+  State<StatefulWidget> createState() => MemoryPageState();
 }
 
-class _MemoryPageState extends State<MemoryPage>
+class MemoryPageState extends State<MemoryPage>
     with SingleTickerProviderStateMixin {
   var agentAndMessages = [];
   int currentAgentIndex = 0;
@@ -19,6 +19,19 @@ class _MemoryPageState extends State<MemoryPage>
   String? currentMessageTitle;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+
+  void refresh() {
+    Supabase.instance.client
+        .from('agents')
+        .select("*, messages(*)")
+        .eq("messages.saved", true)
+        .then((data) {
+          print("Fetched agents and messages: $data");
+          setState(() {
+            agentAndMessages = data;
+          });
+        });
+  }
 
   @override
   void initState() {

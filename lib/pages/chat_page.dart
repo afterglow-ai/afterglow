@@ -114,8 +114,12 @@ class ChatPageState extends State<ChatPage> {
                                         ScaffoldMessenger.of(
                                           context,
                                         ).showSnackBar(
-                                          SnackBar(content: Text("信件已放入回忆")),
+                                          SnackBar(
+                                            content: Text("信件已放入回忆"),
+                                            behavior: SnackBarBehavior.floating,
+                                          ),
                                         );
+                                        memKey.currentState?.refresh();
                                       });
                                 }
                               },
