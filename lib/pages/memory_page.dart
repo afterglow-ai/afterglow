@@ -54,7 +54,7 @@ class _MemoryPageState extends State<MemoryPage>
   @override
   Widget build(BuildContext context) {
     if (agentAndMessages.isEmpty) {
-      return Center(child: Text("没有找到任何回忆"));
+      return BookContainer(child: Center(child: Text("没有找到任何回忆")));
     }
 
     if (currentMessage != null) {
