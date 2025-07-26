@@ -20,7 +20,7 @@ class BookContainer extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: deviceSize.width * 0.2,
           vertical: deviceSize.height * 0.05,
-        ).copyWith(),
+        ).copyWith(right: deviceSize.width * 0.15),
         child: child,
       ),
     );
