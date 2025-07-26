@@ -1,4 +1,4 @@
-package com.example.afterglow
+package me.localai.sendream
 
 import io.flutter.embedding.android.FlutterActivity
 

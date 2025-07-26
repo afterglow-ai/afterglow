@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.afterglow"
+    namespace = "me.localai.sendream"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
