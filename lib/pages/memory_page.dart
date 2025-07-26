@@ -96,11 +96,6 @@ class _MemoryPageState extends State<MemoryPage>
                     : "",
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-              SizedBox(height: 16),
-              Text(
-                currentMessage['content'],
-                style: TextStyle(fontSize: 16, color: Colors.black54),
-              ),
               if (currentMessage['image_url'] != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
@@ -111,6 +106,12 @@ class _MemoryPageState extends State<MemoryPage>
                     width: double.infinity,
                   ),
                 ),
+              SizedBox(height: 16),
+              Text(
+                currentMessage['content'],
+                style: TextStyle(fontSize: 16, color: Colors.black54),
+              ),
+
               SizedBox(height: 16),
             ],
           ),
