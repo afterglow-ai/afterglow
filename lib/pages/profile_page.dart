@@ -1,5 +1,6 @@
 import 'package:sendream/widgets/book_container.dart';
 import 'package:flutter/material.dart';
+import 'package:sendream/widgets/letter_container.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -35,6 +36,18 @@ class ProfilePage extends StatelessWidget {
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text("设置"),
+            trailing: Icon(Icons.chevron_right),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text("Debug"),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => LetterContainer(
+                  title: "Helloworld",
+                ),
+              ),
+            ),
             trailing: Icon(Icons.chevron_right),
           ),
         ],
