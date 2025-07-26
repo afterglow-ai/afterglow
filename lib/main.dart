@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:sendream/consts.dart';
 import 'package:sendream/pages/chat_page.dart';
 import 'package:sendream/pages/memory_page.dart';
 import 'package:sendream/pages/profile_page.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           seedColor: Color.fromRGBO(255, 165, 165, 1),
         ).copyWith(primary: Color.fromRGBO(255, 165, 165, 1)),
       ),
-      home: const NavPage(),
+      home: NavPage(key: navPageKey),
     );
   }
 }
@@ -55,11 +56,11 @@ class NavPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _NavPageState();
+    return NavPageState();
   }
 }
 
-class _NavPageState extends State<NavPage> {
+class NavPageState extends State<NavPage> {
   int currentIndex = 1;
   int bg = 1;
   AudioPlayer player = AudioPlayer();
