@@ -100,7 +100,7 @@ class ChatPageState extends State<ChatPage> {
                           builder: (context, snapshot) {
                             final data = snapshot.data;
                             if (data == null) {
-                              return CircularProgressIndicator();
+                              return Center(child: CircularProgressIndicator());
                             }
                             return Padding(
                               padding: EdgeInsets.symmetric(
