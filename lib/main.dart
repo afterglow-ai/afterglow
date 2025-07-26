@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:sendream/consts.dart';
 import 'package:sendream/pages/chat_page.dart';
 import 'package:sendream/pages/memory_page.dart';
 import 'package:sendream/pages/profile_page.dart';
 import 'package:sendream/widgets/navbar.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,14 +63,13 @@ class NavPage extends StatefulWidget {
 class NavPageState extends State<NavPage> {
   int currentIndex = 1;
   int bg = 1;
-  AudioPlayer player = AudioPlayer();
   @override
   void initState() {
     super.initState();
-    // player.play(AssetSource("bg.mp3"));
-    // player.onPlayerComplete.listen((e) {
-    //   player.play(AssetSource("bg.mp3"));
-    // });
+    player.play(AssetSource("bg.mp3"));
+    player.onPlayerComplete.listen((e) {
+      player.play(AssetSource("bg.mp3"));
+    });
   }
 
   void changeBg(int bg) {

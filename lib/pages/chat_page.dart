@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:sendream/consts.dart';
 import 'package:sendream/dify.dart';
 import 'package:sendream/widgets/chatbubble.dart';
@@ -106,7 +107,24 @@ class ChatPageState extends State<ChatPage> {
                                 horizontal: 8,
                                 vertical: 8,
                               ),
-                              child: Text(data.message.toString()),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (data.audioUrl != null)
+                                    IconButton(
+                                      onPressed: () {
+                                        player.play(
+                                          UrlSource(
+                                            data.audioUrl!,
+                                            mimeType: "audio/x-wav",
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(Icons.voice_chat),
+                                    ),
+                                  Text(data.message.toString()),
+                                ],
+                              ),
                             );
                           },
                         ),
