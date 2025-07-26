@@ -67,10 +67,10 @@ class NavPageState extends State<NavPage> {
   @override
   void initState() {
     super.initState();
-    player.play(AssetSource("bg.mp3"));
-    player.onPlayerComplete.listen((e) {
-      player.play(AssetSource("bg.mp3"));
-    });
+    // player.play(AssetSource("bg.mp3"));
+    // player.onPlayerComplete.listen((e) {
+    //   player.play(AssetSource("bg.mp3"));
+    // });
   }
 
   void changeBg(int bg) {
