@@ -31,6 +31,7 @@ class MemoryPage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 16),
             Expanded(
               child: WaterfallFlow.builder(
                 gridDelegate:

@@ -21,7 +21,11 @@ void main() async {
   final auth = Supabase.instance.client.auth;
 
   if (auth.currentUser == null) {
-    await auth.signInAnonymously();
+    try {
+      await auth.signInAnonymously();
+    } catch (e) {
+      print(e);
+    }
   }
 
   runApp(const MyApp());

@@ -1,9 +1,35 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class LetterContainer extends StatelessWidget {
-  final String? title;
-  final String? body;
-  const LetterContainer({super.key, this.title, this.body});
+class LetterContainer extends StatefulWidget {
+  final String? name;
+  final int? agentId;
+  const LetterContainer({super.key, this.name, this.agentId});
+
+  @override
+  State<LetterContainer> createState() => _LetterContainerState();
+}
+
+class _LetterContainerState extends State<LetterContainer> {
+  final ImagePicker _picker = ImagePicker();
+  XFile? _selectedImage;
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() {
+          _selectedImage = image;
+        });
+      }
+    } catch (e) {
+      // Handle error
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('选择图片失败: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +44,7 @@ class LetterContainer extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: _pickImage,
           elevation: 0,
           shape: CircleBorder(),
           backgroundColor: Color(0xFFFF8B8B),
@@ -36,6 +62,7 @@ class LetterContainer extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -57,32 +84,54 @@ class LetterContainer extends StatelessWidget {
                   ),
                 ],
               ),
+              Padding(
+                padding: EdgeInsetsGeometry.symmetric(
+                  horizontal: 15.0,
+                  vertical: 4,
+                ),
+                child: Text(
+                  "To: 亲爱的${widget.name ?? ""}",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              // 显示选中的图片
+              if (_selectedImage != null)
+                Padding(
+                  padding: EdgeInsetsGeometry.symmetric(
+                    horizontal: 15.0,
+                    vertical: 8,
+                  ),
+                  child: Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(_selectedImage!.path),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
               Expanded(
-                child: ListView(
-                  padding: EdgeInsets.only(top: 16),
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsGeometry.symmetric(
-                        horizontal: 15.0,
-                        vertical: 4,
-                      ),
-                      child: Text(
-                        title ?? "",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                child: Padding(
+                  padding: EdgeInsetsGeometry.symmetric(
+                    horizontal: 15.0,
+                    vertical: 4,
+                  ),
+                  child: TextField(
+                    maxLines: null,
+                    expands: true,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "在这里写下你的信件内容...",
+                      hintStyle: TextStyle(color: Colors.black54),
                     ),
-                    Padding(
-                      padding: EdgeInsetsGeometry.symmetric(
-                        horizontal: 15.0,
-                        vertical: 4,
-                      ),
-                      child: Text("132313321313" * 1000),
-                    ),
-                    SizedBox(height: 100),
-                  ],
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
                 ),
               ),
             ],

@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
             title: Text("Debug"),
             onTap: () => Navigator.of(context).push(
               CupertinoPageRoute(
-                builder: (context) => LetterContainer(title: "Helloworld"),
+                builder: (context) => LetterContainer(name: "Helloworld"),
               ),
             ),
             trailing: Icon(Icons.chevron_right),
