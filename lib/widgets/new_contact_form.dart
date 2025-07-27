@@ -73,14 +73,14 @@ class NewContactForm extends StatelessWidget {
                     "好的，已经收到你的描述，这里有一张神奇信纸，给ta写下你想对ta说的话吧！如果你上传音色音频，有可能获得语音回复哦！（语音回信为会员服务，暂未开放）！",
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8).copyWith(top: 8),
+                padding: EdgeInsets.symmetric(horizontal: 24).copyWith(top: 8),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: size.width * 0.7),
                   child: FilledButton(
                     onPressed: onCreate,
                     child: SizedBox(
                       width: double.infinity,
-                      child: Center(child: Text("创建")),
+                      child: Center(child: Text("写信")),
                     ),
                   ),
                 ),

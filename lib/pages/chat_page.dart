@@ -3,6 +3,7 @@ import 'package:sendream/consts.dart';
 import 'package:sendream/dify.dart';
 import 'package:sendream/widgets/chatbubble.dart';
 import 'package:flutter/material.dart';
+import 'package:sendream/widgets/letter_container.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sendream/widgets/contact_action_buttons.dart';
 import 'package:sendream/widgets/contact_selector.dart';
@@ -41,12 +42,31 @@ class ChatPageState extends State<ChatPage> {
           "prompt": newContactShort,
           "user_id": Supabase.instance.client.auth.currentUser?.id,
         })
+        .select()
+        .single()
         .then((value) {
           setState(() {
             newContact = false;
             newContactName = null;
             newContactShort = null;
           });
+
+          Navigator.of(context)
+              .push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      LetterContainer(
+                        name: value["name"],
+                        agentId: value["id"],
+                      ),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+                  transitionDuration: Duration(milliseconds: 500),
+                ),
+              )
+              .then((_) => navPageKey.currentState?.changeBg(2));
         });
     lock = false;
   }
