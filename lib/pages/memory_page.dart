@@ -1,4 +1,6 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:sendream/consts.dart';
 import 'package:sendream/widgets/book_container.dart';
 import 'package:sendream/widgets/memory_card.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -119,6 +121,18 @@ class MemoryPageState extends State<MemoryPage>
                     width: double.infinity,
                   ),
                 ),
+              if (currentMessage['audio_url'] != null)
+                IconButton(
+                  onPressed: () {
+                    player.play(
+                      UrlSource(
+                        currentMessage['audio_url']!,
+                        mimeType: "audio/x-wav",
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.play_arrow),
+                ),
               SizedBox(height: 16),
               Text(
                 currentMessage['content'],
@@ -196,6 +210,7 @@ class MemoryPageState extends State<MemoryPage>
                       createdAt: DateTime.parse(
                         message['created_at'],
                       ).toLocal().toString().substring(0, 19),
+                      voiceUrl: message['audio_url'],
                     ),
                   );
                 },

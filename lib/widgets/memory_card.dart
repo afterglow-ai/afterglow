@@ -5,7 +5,7 @@ class MemoryCard extends StatelessWidget {
   final String body;
   final String? imageUrl;
   final String createdAt;
-  final String? voice;
+  final String? voiceUrl;
 
   const MemoryCard({
     super.key,
@@ -13,7 +13,7 @@ class MemoryCard extends StatelessWidget {
     required this.body,
     required this.createdAt,
     this.imageUrl,
-    this.voice,
+    this.voiceUrl,
   });
 
   @override
