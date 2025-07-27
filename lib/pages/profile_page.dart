@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:sendream/widgets/book_container.dart';
 import 'package:flutter/material.dart';
-import 'package:sendream/widgets/letter_container.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -37,16 +35,6 @@ class ProfilePage extends StatelessWidget {
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text("设置"),
-            trailing: Icon(Icons.chevron_right),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text("Debug"),
-            onTap: () => Navigator.of(context).push(
-              CupertinoPageRoute(
-                builder: (context) => LetterContainer(name: "朋友", agentId: 1),
-              ),
-            ),
             trailing: Icon(Icons.chevron_right),
           ),
         ],
